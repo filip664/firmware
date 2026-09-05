@@ -1,0 +1,28 @@
+name: Build Bruce
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Run Build
+        run: pio run -e t-dongle-s3
+
+      - name: Upload Single Merged Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bruce-T-Dongle-S3
+          path: Bruce-*.bin
