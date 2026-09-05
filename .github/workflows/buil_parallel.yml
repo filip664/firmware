@@ -95,6 +95,7 @@ jobs:
           - { env: "Awok-Touch",                      family: "ESP32",}
           - { env: "WaveSentry-R1",                   family: "ESP32",}
           - { env: "LAUNCHER_WaveSentry-R1",          family: "ESP32",}
+          - { env: "lilygo-t-dongle-s3",              family: "ESP32-S3",}
 
     steps:
       - uses: actions/checkout@v4
