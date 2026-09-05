@@ -125,9 +125,8 @@ jobs:
         with:
           path: |
             ~/.platformio
-          key: ${{ runner.os }}-platformio-${{ hashFiles('platformio.ini') }}
+          key: ${{ runner.os }}-platformio-${{ hashFiles('platformio.ini') }}-v2
           restore-keys: |
-            ${{ runner.os }}-platformio-${{ hashFiles('platformio.ini') }}
             ${{ runner.os }}-platformio-
 
       - name: PIO libraries cache
@@ -135,15 +134,19 @@ jobs:
         with:
           path: |
             .pio/libdeps
-          key: ${{ runner.os }}-pio-${{ matrix.board.env }}-${{ hashFiles('platformio.ini') }}
+          key: ${{ runner.os }}-pio-${{ matrix.board.env }}-${{ hashFiles('platformio.ini') }}-v2
           restore-keys: |
-            ${{ runner.os }}-pio-${{ matrix.board.env }}-${{ hashFiles('platformio.ini') }}
             ${{ runner.os }}-pio-${{ matrix.board.env }}-
 
       - name: Install dependencies
         run: |
           pip install requests esptool intelhex
           pip install platformio
+
+      - name: Clean PlatformIO cache
+        run: |
+          rm -rf ~/.platformio/packages/framework-arduinoespressif32
+          platformio update
 
       - name: Prepare PlatformIO file
         run: |
